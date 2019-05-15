@@ -20,20 +20,7 @@
 	}
 
 	if ( 'undefined' !== typeof analytics_tracking_settings ) {
-
-		if ( 'undefined' !== typeof analytics_tracking_settings.scroll && true === analytics_tracking_settings.scroll.enabled ) {
-			$.scrollDepth({
-			  minHeight: analytics_tracking_settings.scroll.minimum_height,
-			  elements: analytics_tracking_settings.scroll.scroll_elements.split(', '),
-			  percentage: analytics_tracking_settings.scroll.percentage,
-			  userTiming: analytics_tracking_settings.scroll.user_timing,
-			  pixelDepth: analytics_tracking_settings.scroll.pixel_depth,
-			  nonInteraction: analytics_tracking_settings.scroll.non_interaction
-			});
-		}
-
 		if ( 'undefined' !== typeof analytics_tracking_settings.special && true === analytics_tracking_settings.special.enabled ) {
-
 			// external links
 			$( 'a[href^="http"]:not([href*="://' + document.domain + '"])' ).click( function() {
 			    wp_analytics_tracking_event( 'event', 'Outbound links', 'Click', this.href );
@@ -51,7 +38,6 @@
 
 			// internal links
 			$( 'a:not([href^="(http:|https:)?//"],[href^="#"],[href^="mailto:"])' ).click( function() {
-
 				// track downloads
 				if ( '' !== analytics_tracking_settings.special.download_regex ) {
 					var url = this.href;
@@ -70,15 +56,12 @@
 						wp_analytics_tracking_event( 'event', 'Downloads', extension, this.href );
 					}
 				}
-
 			});
-
 		}
 
 		if ( 'undefined' !== typeof analytics_tracking_settings.affiliate && true === analytics_tracking_settings.affiliate.enabled ) {
 			// any link could be an affiliate, i guess?
 			$( 'a' ).click( function() {
-
 				// track affiliates
 				if ( '' !== analytics_tracking_settings.affiliate.affiliate_regex ) {
 					var checkAffiliate = new RegExp( "\\.(" + analytics_tracking_settings.affiliate.affiliate_regex + ")([\?#].*)?$", "i" );
@@ -87,18 +70,7 @@
 						wp_analytics_tracking_event( 'event', 'Affiliate', 'Click', this.href );
 					}
 				}
-
 			});
-		}
-
-		// link fragments as pageviews
-		// does not use the event tracking method
-		if ( 'undefined' !== typeof analytics_tracking_settings.fragment && true === analytics_tracking_settings.fragment.enabled ) {
-			if ( typeof ga !== 'undefined' ) {
-				window.onhashchange = function() {
-					ga( 'send', 'pageview', location.pathname + location.search + location.hash );
-				}
-			}
 		}
 
 		// basic form submits
