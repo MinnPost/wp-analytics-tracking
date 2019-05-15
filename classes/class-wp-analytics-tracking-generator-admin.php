@@ -300,90 +300,117 @@ class WP_Analytics_Tracking_Generator_Admin {
 		add_settings_section( $page, $title, null, $page );
 
 		$settings = array(
-			'track_scroll_depth'      => array(
-				'title'    => __( 'Track page scroll depth?', 'wp-analytics-tracking-generator' ),
+			'clean_url_tracker_enabled'       => array(
+				'title'    => __( 'Enable clean URL tracker?', 'wp-analytics-tracking-generator' ),
 				'callback' => $callbacks['text'],
 				'page'     => $page,
 				'section'  => $section,
-				'class'    => 'wp-analytics-generator-field-track-page-scroll-toggle',
+				'class'    => '',
 				'args'     => array(
 					'type' => 'checkbox',
-					'desc' => '',
+					'desc' => __( 'Ensures consistency in the URL paths that get reported to Google Analytics; avoiding the problem where separate rows in your pages reports actually point to the same page.', 'wp-analytics-tracking-generator' ),
 				),
 			),
-			'minimum_height'          => array(
-				'title'    => __( 'Minimum height', 'wp-analytics-tracking-generator' ),
+			'event_tracker_enabled'           => array(
+				'title'    => __( 'Enable event tracker?', 'wp-analytics-tracking-generator' ),
 				'callback' => $callbacks['text'],
 				'page'     => $page,
 				'section'  => $section,
-				'class'    => 'wp-analytics-generator-field-scroll wp-analytics-generator-field-scroll-minimum-height',
+				'class'    => '',
 				'args'     => array(
-					'type'     => 'text',
-					'desc'     => 'Enter a pixel height for pages if applicable. Otherwise, 0 is the default.',
-					'constant' => '',
+					'type' => 'checkbox',
+					'desc' => __( 'Enables declarative event tracking, via HTML attributes in the markup.', 'wp-analytics-tracking-generator' ),
 				),
 			),
-			'scroll_depth_elements'   => array(
-				'title'    => __( 'Scroll depth elements', 'wp-analytics-tracking-generator' ),
-				'callback' => $callbacks['textarea'],
+			'impression_tracker_enabled'      => array(
+				'title'    => __( 'Enable impression tracker?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
 				'page'     => $page,
 				'section'  => $section,
-				'class'    => 'wp-analytics-generator-field-scroll wp-analytics-generator-field-scroll-depth-elements',
+				'class'    => '',
 				'args'     => array(
-					'desc' => 'Leave this empty if you do not need to track specific HTML elements. Otherwise, add jQuery selectors separated by commas.',
-					'rows' => 5,
-					'cols' => '',
+					'type' => 'checkbox',
+					'desc' => __( 'Allows you to track when elements are visible within the viewport.', 'wp-analytics-tracking-generator' ),
 				),
 			),
-			'track_scroll_percentage' => array(
-				'title'    => __( 'Track scroll percentage?', 'wp-analytics-tracking-generator' ),
-				'callback' => $callbacks['select'],
+			'max_scroll_tracker_enabled'      => array(
+				'title'    => __( 'Enable max scroll tracker?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
 				'page'     => $page,
 				'section'  => $section,
-				'class'    => 'wp-analytics-generator-field-scroll wp-analytics-generator-field-scroll-track-percentage',
+				'class'    => '',
 				'args'     => array(
-					'type'  => 'select',
-					'desc'  => 'Setting this to false will cause the plugin to only track the elements above.',
-					'items' => $this->get_true_false_select( 'true' ),
+					'type' => 'checkbox',
+					'desc' => __( 'Automatically tracks how far down the page a user scrolls.', 'wp-analytics-tracking-generator' ),
 				),
 			),
-			'track_user_timing'       => array(
-				'title'    => __( 'Track user timing?', 'wp-analytics-tracking-generator' ),
-				'callback' => $callbacks['select'],
+			'media_query_tracker_enabled'     => array(
+				'title'    => __( 'Enable media query tracker?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
 				'page'     => $page,
 				'section'  => $section,
-				'class'    => 'wp-analytics-generator-field-scroll wp-analytics-generator-field-scroll-track-timing',
+				'class'    => '',
 				'args'     => array(
-					'type'  => 'select',
-					'desc'  => 'Setting this to false will turn off User Timing events.',
-					'items' => $this->get_true_false_select( 'true' ),
+					'type' => 'checkbox',
+					'desc' => __( 'Enables tracking media query matching and media query changes.', 'wp-analytics-tracking-generator' ),
 				),
 			),
-			'track_pixel_depth'       => array(
-				'title'    => __( 'Track pixel depth?', 'wp-analytics-tracking-generator' ),
-				'callback' => $callbacks['select'],
+			'outbound_form_tracker_enabled'   => array(
+				'title'    => __( 'Enable outbound form tracker?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
 				'page'     => $page,
 				'section'  => $section,
-				'class'    => 'wp-analytics-generator-field-scroll wp-analytics-generator-field-scroll-track-pixel-depth',
+				'class'    => '',
 				'args'     => array(
-					'type'  => 'select',
-					'desc'  => 'Setting this to false will turn off Pixel Depth events.',
-					'items' => $this->get_true_false_select( 'true' ),
+					'type' => 'checkbox',
+					'desc' => __( 'Automatically tracks form submits to external domains.', 'wp-analytics-tracking-generator' ),
 				),
 			),
-			'non_interaction'         => array(
-				'title'    => __( 'Use nonInteraction?', 'wp-analytics-tracking-generator' ),
-				'callback' => $callbacks['select'],
+			'outbound_link_tracker_enabled'   => array(
+				'title'    => __( 'Enable outbound link tracker?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
 				'page'     => $page,
 				'section'  => $section,
-				'class'    => 'wp-analytics-generator-field-scroll wp-analytics-generator-field-non-interaction',
+				'class'    => '',
 				'args'     => array(
-					'type'  => 'select',
-					'desc'  => 'Scroll events will not impact bounce rate if this value is true.',
-					'items' => $this->get_true_false_select( 'true' ),
+					'type' => 'checkbox',
+					'desc' => __( 'Automatically tracks link clicks to external domains.', 'wp-analytics-tracking-generator' ),
 				),
 			),
-			'track_special_links'     => array(
+			'page_visibility_tracker_enabled' => array(
+				'title'    => __( 'Enable page visibility tracker?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
+				'page'     => $page,
+				'section'  => $section,
+				'class'    => '',
+				'args'     => array(
+					'type' => 'checkbox',
+					'desc' => __( 'Automatically tracks how long pages are in the visible state (as opposed to in a background tab)', 'wp-analytics-tracking-generator' ),
+				),
+			),
+			'social_widget_tracker_enabled'   => array(
+				'title'    => __( 'Enable official social widget tracker?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
+				'page'     => $page,
+				'section'  => $section,
+				'class'    => '',
+				'args'     => array(
+					'type' => 'checkbox',
+					'desc' => __( 'Automatically tracks user interactions with the official Facebook and Twitter widgets.', 'wp-analytics-tracking-generator' ),
+				),
+			),
+			'url_change_tracker_enabled'      => array(
+				'title'    => __( 'Enable url change tracker?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
+				'page'     => $page,
+				'section'  => $section,
+				'class'    => '',
+				'args'     => array(
+					'type' => 'checkbox',
+					'desc' => __( 'Automatically tracks URL changes for single page applications.', 'wp-analytics-tracking-generator' ),
+				),
+			),
+			'track_special_links'             => array(
 				'title'    => __( 'Track downloads, mailto, telephone, outbound links?', 'wp-analytics-tracking-generator' ),
 				'callback' => $callbacks['text'],
 				'page'     => $page,
@@ -394,7 +421,7 @@ class WP_Analytics_Tracking_Generator_Admin {
 					'desc' => '',
 				),
 			),
-			'download_regex'          => array(
+			'download_regex'                  => array(
 				'title'    => __( 'Download regex', 'wp-analytics-tracking-generator' ),
 				'callback' => $callbacks['text'],
 				'page'     => $page,
@@ -406,7 +433,7 @@ class WP_Analytics_Tracking_Generator_Admin {
 					'constant' => '',
 				),
 			),
-			'track_affiliate_links'   => array(
+			'track_affiliate_links'           => array(
 				'title'    => __( 'Track affiliate links?', 'wp-analytics-tracking-generator' ),
 				'callback' => $callbacks['text'],
 				'page'     => $page,
@@ -417,7 +444,7 @@ class WP_Analytics_Tracking_Generator_Admin {
 					'desc' => '',
 				),
 			),
-			'affiliate_regex'         => array(
+			'affiliate_regex'                 => array(
 				'title'    => __( 'Affiliate regex', 'wp-analytics-tracking-generator' ),
 				'callback' => $callbacks['text'],
 				'page'     => $page,
@@ -429,18 +456,7 @@ class WP_Analytics_Tracking_Generator_Admin {
 					'constant' => '',
 				),
 			),
-			'track_fragment_links'    => array(
-				'title'    => __( 'Track fragment links?', 'wp-analytics-tracking-generator' ),
-				'callback' => $callbacks['text'],
-				'page'     => $page,
-				'section'  => $section,
-				'class'    => 'wp-analytics-generator-field-track-fragment',
-				'args'     => array(
-					'type' => 'checkbox',
-					'desc' => 'Checking this will cause the tracker to send a pageview event when a #hash link is clicked',
-				),
-			),
-			'track_form_submissions'  => array(
+			'track_form_submissions'          => array(
 				'title'    => __( 'Track form submissions?', 'wp-analytics-tracking-generator' ),
 				'callback' => $callbacks['text'],
 				'page'     => $page,
@@ -451,7 +467,7 @@ class WP_Analytics_Tracking_Generator_Admin {
 					'desc' => '',
 				),
 			),
-			'track_adblocker_status'  => array(
+			'track_adblocker_status'          => array(
 				'title'    => __( 'Track ad blocker status?', 'wp-analytics-tracking-generator' ),
 				'callback' => $callbacks['text'],
 				'page'     => $page,
