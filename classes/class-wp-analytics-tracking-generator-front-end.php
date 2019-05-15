@@ -77,6 +77,69 @@ class WP_Analytics_Tracking_Generator_Front_End {
 				$disable_pageview  = filter_var( $disable_pageview, FILTER_VALIDATE_BOOLEAN );
 				$property_id       = defined( 'WP_ANALYTICS_TRACKING_ID' ) ? WP_ANALYTICS_TRACKING_ID : get_option( $this->option_prefix . 'property_id', '' );
 				$custom_dimensions = $this->get_custom_dimensions();
+
+				// autotrack plugins
+				$clean_url_tracker_enabled = filter_var( get_option( $this->option_prefix . 'clean_url_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $clean_url_tracker_enabled ) {
+					$clean_url_options = '';
+					$clean_url_options = apply_filters( $this->option_prefix . 'clean_url_tracker_options', $clean_url_options );
+				}
+
+				$event_tracker_enabled = filter_var( get_option( $this->option_prefix . 'event_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $event_tracker_enabled ) {
+					$event_options = '';
+					$event_options = apply_filters( $this->option_prefix . 'event_tracker_options', $event_options );
+				}
+
+				$impression_tracker_enabled = filter_var( get_option( $this->option_prefix . 'impression_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $impression_tracker_enabled ) {
+					$impression_options = '';
+					$impression_options = apply_filters( $this->option_prefix . 'impression_tracker_options', $impression_options );
+				}
+
+				$max_scroll_tracker_enabled = filter_var( get_option( $this->option_prefix . 'max_scroll_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $max_scroll_tracker_enabled ) {
+					$max_scroll_options = '';
+					$max_scroll_options = apply_filters( $this->option_prefix . 'max_scroll_tracker_options', $max_scroll_options );
+				}
+
+				$media_query_tracker_enabled = filter_var( get_option( $this->option_prefix . 'media_query_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $media_query_tracker_enabled ) {
+					$media_query_options = '';
+					$media_query_options = apply_filters( $this->option_prefix . 'media_query_tracker_options', $media_query_options );
+				}
+
+				$outbound_form_tracker_enabled = filter_var( get_option( $this->option_prefix . 'outbound_form_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $outbound_form_tracker_enabled ) {
+					$outbound_form_options = '';
+					$outbound_form_options = apply_filters( $this->option_prefix . 'outbound_form_tracker_options', $outbound_form_options );
+				}
+
+				$outbound_link_tracker_enabled = filter_var( get_option( $this->option_prefix . 'outbound_link_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $outbound_link_tracker_enabled ) {
+					$outbound_link_options = '';
+					$outbound_link_options = apply_filters( $this->option_prefix . 'outbound_link_tracker_options', $outbound_link_options );
+				}
+
+				$page_visibility_tracker_enabled = filter_var( get_option( $this->option_prefix . 'page_visibility_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $page_visibility_tracker_enabled ) {
+					$page_visibility_options = '';
+					$page_visibility_options = apply_filters( $this->option_prefix . 'page_visibility_tracker_options', $page_visibility_options );
+				}
+
+				$social_widget_tracker_enabled = filter_var( get_option( $this->option_prefix . 'social_widget_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $social_widget_tracker_enabled ) {
+					$social_widget_options = '';
+					$social_widget_options = apply_filters( $this->option_prefix . 'social_widget_tracker_options', $social_widget_options );
+				}
+
+				$url_change_tracker_enabled = filter_var( get_option( $this->option_prefix . 'url_change_tracker_enabled', false ), FILTER_VALIDATE_BOOLEAN );
+				if ( true === $url_change_tracker_enabled ) {
+					$url_change_options = '';
+					$url_change_options = apply_filters( $this->option_prefix . 'url_change_tracker_options', $url_change_options );
+				}
+
+				// with gtm, autotracker doesn't work but it can be done inside GTM
 				require_once( plugin_dir_path( $this->file ) . '/templates/front-end/tracking-code-' . $type . '.php' );
 			}
 		}
