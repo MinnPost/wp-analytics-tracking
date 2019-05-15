@@ -1,0 +1,17 @@
+.wp-analytics-generator-fields-wrap table {
+  margin: 0.5em;
+  padding: 0.5em;
+  background: #e1e1e1;
+  border: 1px solid #e5e5e5;
+  width: 100%;
+}
+
+.wp-analytics-generator-fields-wrap table caption {
+  background: #e1e1e1;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.25em;
+  padding: 1em 0.5em 0;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndwLWFuYWx5dGljcy10cmFja2luZy1nZW5lcmF0b3ItYWRtaW4uc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFJQTtFQUNDLGNBQWE7RUFDYixlQUFjO0VBQ2Qsb0JBTm1CO0VBT25CLDBCQU42QjtFQU83QixZQUFXO0NBUVg7O0FBYkQ7RUFPRSxvQkFWa0I7RUFXbEIsaUJBQWdCO0VBQ2hCLGtCQUFpQjtFQUNqQixrQkFBaUI7RUFDakIscUJBQW9CO0NBQ3BCIiwiZmlsZSI6IndwLWFuYWx5dGljcy10cmFja2luZy1nZW5lcmF0b3ItYWRtaW4uY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gdmFyaWFibGVzXG4kYmFja2dyb3VuZDogI2UxZTFlMTtcbiRib3JkZXItY29sb3ItbGlnaHRlcjogI2U1ZTVlNTtcblxuLndwLWFuYWx5dGljcy1nZW5lcmF0b3ItZmllbGRzLXdyYXAgdGFibGUge1xuXHRtYXJnaW46IDAuNWVtO1xuXHRwYWRkaW5nOiAwLjVlbTtcblx0YmFja2dyb3VuZDogJGJhY2tncm91bmQ7XG5cdGJvcmRlcjogMXB4IHNvbGlkICRib3JkZXItY29sb3ItbGlnaHRlcjtcblx0d2lkdGg6IDEwMCU7XG5cdGNhcHRpb24ge1xuXHRcdGJhY2tncm91bmQ6ICRiYWNrZ3JvdW5kO1xuXHRcdHRleHQtYWxpZ246IGxlZnQ7XG5cdFx0Zm9udC13ZWlnaHQ6IGJvbGQ7XG5cdFx0Zm9udC1zaXplOiAxLjI1ZW07XG5cdFx0cGFkZGluZzogMWVtIDAuNWVtIDA7XG5cdH1cbn1cbiJdfQ== */

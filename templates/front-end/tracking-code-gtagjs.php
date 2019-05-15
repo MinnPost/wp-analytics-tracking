@@ -6,27 +6,28 @@
  */
 ?>
 <!-- Begin WP Analytics Tracking Generator gtag.js code -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $property_id; ?>"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr( $property_id ); ?>"></script>
 <script>
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
 	<?php if ( true !== $disable_pageview ) : ?>
-	gtag('config', '<?php echo $property_id; ?>');
+	gtag('config', '<?php echo esc_attr( $property_id ); ?>');
 	<?php else : ?>
-	gtag('config', '<?php echo $property_id; ?>', { 'send_page_view': false });
+	gtag('config', '<?php echo esc_attr( $property_id ); ?>', { 'send_page_view': false });
 	<?php endif; ?>
 	<?php if ( ! empty( $custom_dimensions ) ) : ?>
 		gtag( 'set', {
 			<?php foreach ( $custom_dimensions as $key => $value ) : ?>
 				<?php if ( ! next( $custom_dimensions ) ) : ?>
-					'dimension<?php echo $key; ?>': '<?php echo $value; ?>'
+					'dimension<?php echo esc_attr( $key ); ?>': '<?php echo esc_html( $value ); ?>'
 				<?php else : ?>
-					'dimension<?php echo $key; ?>': '<?php echo $value; ?>',
+					'dimension<?php echo esc_attr( $key ); ?>': '<?php echo esc_html( $value ); ?>',
 				<?php endif; ?>
 			<?php endforeach; ?>
 		});
 	<?php endif; ?>
 	<?php if ( true !== $disable_pageview ) : ?>
+	<?php endif; ?>
 </script>
 <!-- End WP Analytics Tracking Generator gtag.js code -->

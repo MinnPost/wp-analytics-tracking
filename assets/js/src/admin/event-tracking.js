@@ -3,10 +3,10 @@
 	function toggleEventFields( parent, type, heading ) {
 		var $toggle = $('input[type="checkbox"]', $(parent) );
 
-		$( '.wp-analytics-generator-field-' + type ).wrapAll( '<tr class="wp-analytics-generator-fields-' + type + '-wrap"><td colspan="2"><table />');
+		$( '.wp-analytics-generator-field-' + type ).wrapAll( '<tr class="wp-analytics-generator-fields-wrap wp-analytics-generator-fields-' + type + '-wrap"><td colspan="2"><table />');
 		$( '.wp-analytics-generator-fields-' + type + '-wrap' ).hide();
 		if ( '' !== heading ) {
-			$( '.wp-analytics-generator-fields-' + type + '-wrap table' ).before( '<h3>' + heading + '</h3>' );
+			$( '.wp-analytics-generator-fields-' + type + '-wrap table' ).prepend( '<caption>' + heading + '</caption>' );
 		}
 
 		if ($toggle.is(':checked')) {

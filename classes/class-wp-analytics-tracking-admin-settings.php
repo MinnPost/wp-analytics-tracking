@@ -11,14 +11,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
-* Default display for <input> fields
-*
-* @param array $args
-* @return string $field
-*/
-if ( ! function_exists( 'display_input_field' ) ) :
-	function display_input_field( $args ) {
+class WP_Analytics_Tracking_Admin_Settings {
+
+	public function __construct() {}
+
+	/**
+	* Default display for <input> fields
+	*
+	* @param array $args
+	* @return string $field
+	*/
+	public function display_input_field( $args ) {
 
 		$field = '';
 
@@ -34,44 +37,49 @@ if ( ! function_exists( 'display_input_field' ) ) :
 			$class = 'checkbox';
 		}
 
-		$value = esc_attr( get_option( $id, '' ) );
-		if ( 'checkbox' === $type ) {
-			if ( '1' === $value ) {
-				$checked = 'checked ';
-			}
-			$value = 1;
-		}
-		if ( '' === $value && isset( $args['default'] ) && '' !== $args['default'] ) {
-			$value = $args['default'];
-		}
-
-		$field .= sprintf( '<input type="%1$s" value="%2$s" name="%3$s" id="%4$s" class="%5$s"%6$s>',
-			esc_attr( $type ),
-			esc_attr( $value ),
-			esc_attr( $name ),
-			esc_attr( $id ),
-			sanitize_html_class( $class . esc_html( ' code' ) ),
-			esc_html( $checked )
-		);
-		if ( '' !== $desc ) {
-			$field .= sprintf( '<p class="description">%1$s</p>',
-				esc_html( $desc )
+		if ( isset( $args['constant'] ) && defined( $args['constant'] ) ) {
+			echo sprintf( '<p><code>%1$s</code></p>',
+				esc_html__( 'Defined in wp-config.php', 'wp-analytics-tracking-generator' )
 			);
+		} else {
+
+			$value = esc_attr( get_option( $id, '' ) );
+			if ( 'checkbox' === $type ) {
+				if ( '1' === $value ) {
+					$checked = 'checked ';
+				}
+				$value = 1;
+			}
+			if ( '' === $value && isset( $args['default'] ) && '' !== $args['default'] ) {
+				$value = $args['default'];
+			}
+
+			$field .= sprintf( '<input type="%1$s" value="%2$s" name="%3$s" id="%4$s" class="%5$s"%6$s>',
+				esc_attr( $type ),
+				esc_attr( $value ),
+				esc_attr( $name ),
+				esc_attr( $id ),
+				sanitize_html_class( $class . esc_html( ' code' ) ),
+				esc_html( $checked )
+			);
+			if ( '' !== $desc ) {
+				$field .= sprintf( '<p class="description">%1$s</p>',
+					esc_html( $desc )
+				);
+			}
+
+			echo $field;
 		}
-
-		echo $field;
 	}
-endif;
 
-/**
-* Display for multiple checkboxes
-* Above method can handle a single checkbox as it is
-*
-* @param array $args
-* @return string $field
-*/
-if ( ! function_exists( 'display_checkboxes' ) ) :
-	function display_checkboxes( $args ) {
+	/**
+	* Display for multiple checkboxes
+	* Above method can handle a single checkbox as it is
+	*
+	* @param array $args
+	* @return string $field
+	*/
+	public function display_checkboxes( $args ) {
 
 		$field = '';
 
@@ -128,16 +136,14 @@ if ( ! function_exists( 'display_checkboxes' ) ) :
 		echo $field;
 
 	}
-endif;
 
-/**
-* Display for a dropdown/select
-*
-* @param array $args
-* @return string $field
-*/
-if ( ! function_exists( 'display_select' ) ) :
-	function display_select( $args ) {
+	/**
+	* Display for a dropdown/select
+	*
+	* @param array $args
+	* @return string $field
+	*/
+	public function display_select( $args ) {
 
 		$field = '';
 
@@ -189,15 +195,13 @@ if ( ! function_exists( 'display_select' ) ) :
 
 		echo $field;
 	}
-endif;
 
-/**
-* Display for a textarea
-*
-* @param array $args
-*/
-if ( ! function_exists( 'display_textarea' ) ) :
-	function display_textarea( $args ) {
+	/**
+	* Display for a textarea
+	*
+	* @param array $args
+	*/
+	public function display_textarea( $args ) {
 		$id    = $args['label_for'];
 		$name  = $args['name'];
 		$desc  = $args['desc'];
@@ -236,16 +240,14 @@ if ( ! function_exists( 'display_textarea' ) ) :
 			);
 		}
 	}
-endif;
 
-/**
-* Default display for <a href> links
-*
-* @param array $args
-* @return string $field
-*/
-if ( ! function_exists( 'display_link' ) ) :
-	function display_link( $args ) {
+	/**
+	* Default display for <a href> links
+	*
+	* @param array $args
+	* @return string $field
+	*/
+	public function display_link( $args ) {
 
 		$field = '';
 
@@ -273,4 +275,5 @@ if ( ! function_exists( 'display_link' ) ) :
 
 		echo $field;
 	}
-endif;
+
+}

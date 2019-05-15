@@ -16,6 +16,7 @@ class WP_Analytics_Tracking_Generator_Admin {
 
 	protected $option_prefix;
 	protected $version;
+	protected $file;
 	protected $slug;
 	protected $settings;
 	//protected $cache;
@@ -25,14 +26,16 @@ class WP_Analytics_Tracking_Generator_Admin {
 	*
 	* @param string $option_prefix
 	* @param string $version
+	* @param string $file
 	* @param string $slug
 	* @param object $settings
 	* @throws \Exception
 	*/
-	public function __construct( $option_prefix, $version, $slug, $settings ) {
+	public function __construct( $option_prefix, $version, $file, $slug, $settings ) {
 
 		$this->option_prefix = $option_prefix;
 		$this->version       = $version;
+		$this->file          = $file;
 		$this->slug          = $slug;
 		$this->settings      = $settings;
 		//$this->cache         = $cache;
@@ -156,14 +159,15 @@ class WP_Analytics_Tracking_Generator_Admin {
 		$page     = isset( $get_data['tab'] ) ? sanitize_key( $get_data['tab'] ) : $this->default_tab;
 		$section  = isset( $get_data['tab'] ) ? sanitize_key( $get_data['tab'] ) : $this->default_tab;
 
-		require_once( plugin_dir_path( __FILE__ ) . '/../settings-functions.inc.php' );
+		require_once( plugin_dir_path( __FILE__ ) . 'class-wp-analytics-tracking-admin-settings.php' );
+		$settings = new WP_Analytics_Tracking_Admin_Settings;
 
 		$all_field_callbacks = array(
-			'text'       => 'display_input_field',
-			'checkboxes' => 'display_checkboxes',
-			'select'     => 'display_select',
-			'textarea'   => 'display_textarea',
-			'link'       => 'display_link',
+			'text'       => array( $settings, 'display_input_field' ),
+			'checkboxes' => array( $settings, 'display_checkboxes' ),
+			'select'     => array( $settings, 'display_select' ),
+			'textarea'   => array( $settings, 'display_textarea' ),
+			'link'       => array( $settings, 'display_link' ),
 		);
 
 		$this->basic_settings( 'basic_settings', 'basic_settings', $all_field_callbacks );
@@ -179,8 +183,8 @@ class WP_Analytics_Tracking_Generator_Admin {
 	* @return void
 	*/
 	public function admin_scripts_and_styles() {
-		wp_enqueue_script( $this->slug . '-admin', plugins_url( '../assets/js/' . $this->slug . '-admin.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
-		//wp_enqueue_style( $this->slug . '-admin', plugins_url( '../assets/css/' . $this->slug . '-admin.min.css', __FILE__ ), array(), $this->version, 'all' );
+		wp_enqueue_script( $this->slug . '-admin', plugins_url( 'assets/js/' . $this->slug . '-admin.min.js', dirname( __FILE__ ) ), array( 'jquery' ), $this->version, true );
+		wp_enqueue_style( $this->slug . '-admin', plugins_url( 'assets/css/' . $this->slug . '-admin.min.css', dirname( __FILE__ ) ), array(), $this->version, 'all' );
 	}
 
 	/**
@@ -433,7 +437,7 @@ class WP_Analytics_Tracking_Generator_Admin {
 				'class'    => 'wp-analytics-generator-field-track-fragment',
 				'args'     => array(
 					'type' => 'checkbox',
-					'desc' => '',
+					'desc' => 'Checking this will cause the tracker to send a pageview event when a #hash link is clicked',
 				),
 			),
 			'track_form_submissions'  => array(
@@ -445,6 +449,17 @@ class WP_Analytics_Tracking_Generator_Admin {
 				'args'     => array(
 					'type' => 'checkbox',
 					'desc' => '',
+				),
+			),
+			'track_adblocker_status'  => array(
+				'title'    => __( 'Track ad blocker status?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
+				'page'     => $page,
+				'section'  => $section,
+				'class'    => 'wp-analytics-generator-field-track-adblocker',
+				'args'     => array(
+					'type' => 'checkbox',
+					'desc' => 'If checked, this will create an "off" and an "on" event. Off is if an ad blocker is not detected',
 				),
 			),
 		);
